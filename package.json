@@ -1,0 +1,18 @@
+{
+  "name": "flarum-mcp-server",
+  "version": "0.1.0",
+  "description": "Servidor MCP para conectar Flarum con sistemas de IA.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "alejoasotelo",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
