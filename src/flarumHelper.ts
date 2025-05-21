@@ -1,5 +1,6 @@
 const FLARUM_API_BASE = process.env.FLARUM_API_BASE;
 const FLARUM_API_KEY = process.env.FLARUM_API_KEY;
+const FLARUM_USER_ID = process.env.FLARUM_USER_ID;
 
 async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
   try {
@@ -7,7 +8,7 @@ async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
       ...options,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${FLARUM_API_KEY}`,
+        'Authorization': `Token ${FLARUM_API_KEY}${FLARUM_USER_ID ? `; userId=${FLARUM_USER_ID}` : ''}`,
         ...options.headers,
       },
     });
@@ -25,6 +26,18 @@ async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
 
 export async function getDiscussions() {
   return await fetchFromFlarum('/discussions');
+}
+
+export async function getDiscussion(discussionId: string) {
+  return await fetchFromFlarum(`/discussions/${discussionId}`);
+}
+
+export async function getTags() {
+  return await fetchFromFlarum('/tags');
+}
+
+export async function getTag(tagId: string) {
+  return await fetchFromFlarum(`/tags/${tagId}`);
 }
 
 export async function getPosts(discussionId: string) {

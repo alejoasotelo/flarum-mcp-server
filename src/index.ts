@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { getDiscussions, getPosts, createPost, updatePost, deletePost } from "./flarumHelper";
+import { getDiscussions, getDiscussion, getTags, getTag, getPosts, createPost, updatePost, deletePost } from "./flarumHelper.js";
 
 const FLARUM_API_BASE = process.env.FLARUM_API_BASE;
 
@@ -27,6 +27,61 @@ server.tool(
         {
           type: "text",
           text: JSON.stringify(discussions, null, 2),
+        },
+      ],
+    };
+  },
+);
+
+server.tool(
+  "get-discussion",
+  "Get a specific discussion from Flarum",
+  {
+    discussionId: z.string().describe("ID of the discussion"),
+  },
+  async ({ discussionId }) => {
+    const discussion = await getDiscussion(discussionId);
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(discussion, null, 2),
+        },
+      ],
+    };
+  },
+);
+
+server.tool(
+  "get-tags",
+  "Get tags from Flarum",
+  {},
+  async () => {
+    const tags = await getTags();
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(tags, null, 2),
+        },
+      ],
+    };
+  },
+);
+
+server.tool(
+  "get-tag",
+  "Get a specific tag from Flarum",
+  {
+    tagId: z.string().describe("ID of the tag"),
+  },
+  async ({ tagId }) => {
+    const tag = await getTag(tagId);
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(tag, null, 2),
         },
       ],
     };
