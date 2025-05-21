@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 const FLARUM_API_BASE = 'https://your-flarum-instance.com/api';
 
 async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
