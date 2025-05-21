@@ -1,7 +1,7 @@
 {
   "type": "module",
   "bin": {
-    "weather": "./build/index.js"
+    "flarum": "./build/index.js"
   },
   "scripts": {
     "build": "tsc && chmod 755 build/index.js"
@@ -16,5 +16,7 @@
   "devDependencies": {
     "@types/node": "^18.0.0",
     "typescript": "^4.0.0"
-  }
+  },
+  "author": "Alejo Sotelo",
+  "description": "Este proyecto es un servidor MCP para Flarum."
 }
