@@ -3,7 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { getDiscussions, getPosts, createPost, updatePost, deletePost } from "./flarumHelper";
 
-const FLARUM_API_BASE = "https://your-flarum-instance.com/api";
+const FLARUM_API_BASE = process.env.FLARUM_API_BASE;
 
 // Create server instance
 const server = new McpServer({
