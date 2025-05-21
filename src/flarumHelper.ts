@@ -1,4 +1,5 @@
-const FLARUM_API_BASE = 'https://your-flarum-instance.com/api';
+const FLARUM_API_BASE = process.env.FLARUM_API_BASE;
+const FLARUM_API_KEY = process.env.FLARUM_API_KEY;
 
 async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
   try {
@@ -6,6 +7,7 @@ async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
       ...options,
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${FLARUM_API_KEY}`,
         ...options.headers,
       },
     });

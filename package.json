@@ -1,7 +1,8 @@
 {
+  "name": "flarum-mcp-server",
   "type": "module",
   "bin": {
-    "weather": "./build/index.js"
+    "flarum": "./build/index.js"
   },
   "scripts": {
     "build": "tsc && chmod 755 build/index.js"
