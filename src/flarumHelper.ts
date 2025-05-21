@@ -18,8 +18,7 @@ async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
 
     return await response.json();
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-    console.error('Error fetching from Flarum API:', errorMessage);
+    console.error('Error fetching from Flarum API:', error);
     throw error;
   }
 }
