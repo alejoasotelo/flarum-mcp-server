@@ -24,8 +24,11 @@ async function fetchFromFlarum(endpoint: string, options: RequestInit = {}) {
   }
 }
 
-export async function getDiscussions() {
-  return await fetchFromFlarum('/discussions');
+export async function getDiscussions(tag?: string) {
+  const endpoint = tag 
+    ? `/discussions?filter[tag]=${encodeURIComponent(tag)}`
+    : '/discussions';
+  return await fetchFromFlarum(endpoint);
 }
 
 export async function getDiscussion(discussionId: string) {
@@ -40,12 +43,16 @@ export async function getTag(tagId: string) {
   return await fetchFromFlarum(`/tags/${tagId}`);
 }
 
-export async function getPosts(discussionId: string) {
-  return await fetchFromFlarum(`/discussions/${discussionId}/posts`);
+export async function getPosts() {
+  return await fetchFromFlarum(`/posts`);
 }
 
-export async function createPost(discussionId: string, content: string) {
-  return await fetchFromFlarum(`/discussions/${discussionId}/posts`, {
+export async function getPost(postId: string) {
+  return await fetchFromFlarum(`/posts/${postId}`);
+}
+
+export async function createPost(content: string) {
+  return await fetchFromFlarum(`/posts`, {
     method: 'POST',
     body: JSON.stringify({ content }),
   });

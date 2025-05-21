@@ -1,0 +1,15 @@
+{
+  "servers": [
+    {
+      "id": "flarum",
+      "name": "Flarum",
+      "command": "node",
+      "args": ["${workspaceFolder}/build/index.js"],
+      "env": {
+        "FLARUM_API_BASE": "",
+        "FLARUM_API_KEY": "",
+        "FLARUM_USER_ID": ""
+      }
+    }
+  ]
+}

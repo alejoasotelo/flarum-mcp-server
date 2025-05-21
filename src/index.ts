@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { getDiscussions, getDiscussion, getTags, getTag, getPosts, createPost, updatePost, deletePost } from "./flarumHelper.js";
+import { getDiscussions, getDiscussion, getTags, getTag, getPosts, getPost, createPost, updatePost, deletePost } from "./flarumHelper.js";
 
 const FLARUM_API_BASE = process.env.FLARUM_API_BASE;
 
@@ -19,9 +19,11 @@ const server = new McpServer({
 server.tool(
   "get-discussions",
   "Get discussions from Flarum",
-  {},
-  async () => {
-    const discussions = await getDiscussions();
+  {
+    tag: z.string().optional().describe("Filter discussions by tag name"),
+  },
+  async ({ tag }) => {
+    const discussions = await getDiscussions(tag);
     return {
       content: [
         {
@@ -90,12 +92,10 @@ server.tool(
 
 server.tool(
   "get-posts",
-  "Get posts from a Flarum discussion",
-  {
-    discussionId: z.string().describe("ID of the discussion"),
-  },
-  async ({ discussionId }) => {
-    const posts = await getPosts(discussionId);
+  "Get posts from Flarum",
+  {},
+  async () => {
+    const posts = await getPosts();
     return {
       content: [
         {
@@ -108,14 +108,13 @@ server.tool(
 );
 
 server.tool(
-  "create-post",
-  "Create a new post in a Flarum discussion",
+  "get-post",
+  "Get a specific post from Flarum",
   {
-    discussionId: z.string().describe("ID of the discussion"),
-    content: z.string().describe("Content of the post"),
+    postId: z.string().describe("ID of the post"),
   },
-  async ({ discussionId, content }) => {
-    const post = await createPost(discussionId, content);
+  async ({ postId }) => {
+    const post = await getPost(postId);
     return {
       content: [
         {
@@ -126,6 +125,26 @@ server.tool(
     };
   },
 );
+
+// server.tool(
+//   "create-post",
+//   "Create a new post in a Flarum discussion",
+//   {
+//     discussionId: z.string().describe("ID of the discussion"),
+//     content: z.string().describe("Content of the post"),
+//   },
+//   async ({ discussionId, content }) => {
+//     const post = await createPost(discussionId, content);
+//     return {
+//       content: [
+//         {
+//           type: "text",
+//           text: JSON.stringify(post, null, 2),
+//         },
+//       ],
+//     };
+//   },
+// );
 
 server.tool(
   "update-post",
